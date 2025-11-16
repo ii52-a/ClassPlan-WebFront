@@ -35,7 +35,6 @@ const props = defineProps({
 </script>
 
 <style scoped>
-/* 可以添加一些自定义样式 */
 .el-icon {
   vertical-align: middle;
 }
