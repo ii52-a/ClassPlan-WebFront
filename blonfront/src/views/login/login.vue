@@ -66,6 +66,9 @@ const onSubmit = async () => {
     }
     try{
         let data=await authHttp.login(form.email,form.password)
+        console.log(data);
+        
+        
         let token=data.token;
         let user =data.user;
         authStore.setUserToken(user,token)
