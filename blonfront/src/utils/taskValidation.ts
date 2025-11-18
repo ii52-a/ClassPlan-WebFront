@@ -2,6 +2,8 @@ import type { FormRules } from '@/types/form'
 import type { TaskFormData } from '@/types/task'
 import { useValidation } from '@/composables/useValidation'
 
+
+//输入form
 export const getTaskFormRules = (formData: TaskFormData): FormRules => {
   const { required, length } = useValidation()
   

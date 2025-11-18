@@ -59,14 +59,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import { ElMessage } from 'element-plus';
 import PLmain from '@/components/PLmain.vue';
 import { useForm } from '@/composables/useForm';
 import { getTaskFormRules } from '@/utils/taskValidation';
 import { TeachingPlatform } from '@/types/task';
 import  {TaskFormData,TaskType,TaskFormOptions,PublisherRole} from '@/types/task';
-const initialValues: TaskFormData = {
+const initialValues: TaskFormData = reactive({
     object: '',
     where: '',
     object_start_date: null,
@@ -77,7 +77,7 @@ const initialValues: TaskFormData = {
     type: [],
     resource: '',
     desc: '',
-}
+})
 const formOptions: TaskFormOptions={
     platforms:[
         {
@@ -102,20 +102,19 @@ const formOptions: TaskFormOptions={
     { label: '老师', value: PublisherRole.CLASS_TEACHER }
   ]
 }
-const { formRef, formData, handleSubmit } = useForm({
+const { formRef, formData,rules, handleSubmit } = useForm<TaskFormData>({
   initialValues,
-  rules: getTaskFormRules(formData),
-  onSubmit: async (values: TaskFormData) => {
+  rules: getTaskFormRules(initialValues),
+  onSubmit: async (formData: TaskFormData) => {
     // 反馈
-    console.log('表单数据:', values)
-    ElMessage.success('任务创建成功！')
-    
-    // TODO:写api
-
+            try{
+                //TODO:API
+                console.log('表单数据:', formData)
+                ElMessage.success('任务创建成功！')
+            }catch(error:any){
+                ElMessage.error(error?.message || "加载失败")
+            }
   },
-  onError: (error) => {
-    ElMessage.error(error?.message || "表单提交错误")
-  }
 })
 </script>
 
